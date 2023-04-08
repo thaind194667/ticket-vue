@@ -1,0 +1,24 @@
+@mixin columnFlex($padding: 0px) {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: $padding;
+}
+
+@mixin rowFlex($padding: 0, $justifyContent: center) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: $padding;
+    justify-content: $justifyContent;
+}
+
+@mixin autoLayout($order, $grow, $align: auto) {
+    
+    flex: none;
+    order: $order;
+    flex-grow: $grow;
+    align-self: $align;
+}
+

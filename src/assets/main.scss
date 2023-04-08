@@ -1,0 +1,31 @@
+@use './base';
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    /* App */
+    /* Auto layout */
+    @include base.columnFlex();
+
+    margin: 0;
+    /* left_inner */
+    box-shadow: inset 2px 0px 16px rgba(0, 0, 0, 0.1);
+    
+    /* Inside auto layout */
+    @include base.autoLayout($order: 1, $grow: 1, $align: stretch);
+
+    // &::-webkit-scrollbar {
+    //     display: none;
+    // }
+    // padding: 30px;
+    // width: calc(100% - 24px);
+
+}
+
+::-webkit-scrollbar {
+    // background: rgba(0, 0, 0, 0.3);
+    // border-radius: 9px;
+    // width: 2vh;
+}
