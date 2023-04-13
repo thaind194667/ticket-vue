@@ -1,10 +1,11 @@
 <template>
-    <button :class="[value, pattern, isRound? 'round' : '']">
+    <button :class="[value, pattern, isRound? 'round' : '']" :disabled="status === 'inactive'">
+        <div v-if="textBefore"> {{ value }}</div>
         <SvgIcon :name="showIcon + status" v-if="showIcon" />
         <SvgIcon name="leftArrow" v-if="leftArrow" />
         <SvgIcon name="rightArrow" v-if="rightArrow" />
         <!-- <div v-if="value">{{ value }}</div> -->
-        {{ value }}
+        <div v-if="!textBefore">{{ value }}</div>
     </button>
 </template>
 
@@ -19,6 +20,7 @@ const props = defineProps({
     isRound: {type: Boolean, default: false},
     rightArrow: {type: Boolean, default: false},
     leftArrow: {type: Boolean, default: false},
+    textBefore : {type: Boolean, default: true}
 })
 
 // if(pattern )
@@ -41,15 +43,17 @@ const props = defineProps({
     text-align: center;
     margin: 0;
     background: none;
+    // align-self: stretch;
+    @include base.autoLayout($order: 0, $grow: 0);
 
     &:hover {
         cursor: pointer;
     }
 
     &:disabled {
-        // opacity: 0.6;
+        opacity: 0.6;
         &:hover {
-            cursor: normal;
+            cursor:auto;
         }
     }
 }
@@ -151,7 +155,12 @@ const props = defineProps({
 
 .minus, .plus {
     display: inline-block;
-    margin-right: 6px;
+    padding: 0;
+    // margin-right: 6px;
+    border: none;
+}
+
+.noborder {
     border: none;
 }
 </style>

@@ -6,7 +6,7 @@
             </button> -->
             <ButtonS value="新規登録" pattern="red" />
             <!-- <ImportIcon /> -->
-            <ButtonS value="設定情報出力" pattern="line" showIcon="設定情報出力"/>
+            <ButtonS value="設定情報出力" pattern="line" showIcon="設定情報出力" :textBefore="false"/>
             <ButtonS value="初期化" pattern="line short" />
             <!-- <button class="output-btn">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

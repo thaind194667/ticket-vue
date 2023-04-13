@@ -25,19 +25,20 @@
                     </tr>
             </thead>
 
-            <tbody v-for="row in tableBody" :key="row.pattern + ' ' + row.status"  :class="row.pattern + ' bodyRow ' + row.status"> 
-                <tr>
-                    <td class="action edit" :rowspan="row.rowCount" >
+            <tbody v-for="(row, index) in tableBody" :key="row.pattern + ' ' + row.status"  :class="row.pattern + ' bodyRow ' + row.status"> 
+                <TableBody :myRow="row" :index="index" @change="setChange"></TableBody>
+                <!-- <tr v-for="count in row.rowCount">
+                    <td v-if="count === 1" class="action edit" :rowspan="row.rowCount" >
                         <ButtonS class="row-btn" :pattern="row.status" showIcon="edit" v-if="row.status === 'default'" @click="setEdit(row)"/>
                         <ButtonS class="row-btn" :pattern="row.status" showIcon="save" v-else @click="setSave(row)"/>
                     </td>
-                    <td class="action delete" :rowspan="row.rowCount">
+                    <td v-if="count === 1" class="action delete" :rowspan="row.rowCount">
                         <ButtonS class="row-btn" :pattern="row.status" showIcon="delete" :status="row.status === 'new' ? 'inactive' : ''" />
                     </td>
-                    <td class="name" :rowspan="row.rowCount">
+                    <td v-if="count === 1" class="name" :rowspan="row.rowCount">
                         <input type="text" placeholder="カテゴリ名" :disabled="row.status === 'default'" />
                     </td>
-                    <td  :rowspan="row.rowCount">
+                    <td v-if="count === 1" :rowspan="row.rowCount">
                         <div class="customer-setting">
                         <ButtonS class="customer-choose" pattern="black" v-if="row.status !== 'default'" value="設定"/>
                         <div class="customer">
@@ -56,29 +57,43 @@
                         </div>
                     </td>
 
-                    <td class="discount" :rowspan="row.rowCount" >
+                    <td v-if="count === 1" class="discount" :rowspan="row.rowCount" >
                         <input type="number" min="0" max="99" placeholder="-" :disabled="row.status === 'default'" value="99"/> %
                     </td>
-                    <template>
-                        <td class="queueSetting" v-for="count of row.rowCount" :rowspan="row.rowCount">
-                            <div class="ticketType"> 
-                                <div class="modify-btn">
-                                    <ButtonS pattern="minus" showIcon="minus" v-if="row.status !== 'default'" :status="row.rowCount < 2 ? 'inactive' : ''" />
-                                    <ButtonS pattern="plus"  showIcon="plus"  v-if="row.status !== 'default'" />
-                                </div>
-                                <div>
-                                    <input type="text" name="" id="" />
-                                </div>
+                    <td class="queueSetting">
+                        <div class="ticketType"> 
+                            <div class="modify-btn">
+                                <ButtonS pattern="minus" 
+                                showIcon="minus" 
+                                v-if="row.status !== 'default'" 
+                                :status="row.rowCount < 2 ? 'inactive' : ''" 
+                                @click="row.rowCount--" />
+                                <ButtonS 
+                                pattern="plus"  
+                                showIcon="plus"  
+                                v-if="row.status !== 'default'" 
+                                @click="row.rowCount++" />
                             </div>
-                        </td>
-                        <td>AA</td>
-                    </template>
-                    <!-- <tr >
-                        
-                    </tr> -->
+                            <div>
+                                <input type="text" name="" id="" />
+                            </div>
+                        </div>
+                    </td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td>AA</td>
+                    <td v-if="count === 1" :rowspan="row.rowCount">BB</td>
+                    <td v-if="count === 1" :rowspan="row.rowCount">BB</td>
                     
                     
-                </tr>
+                </tr> -->
                 
             </tbody>
 
@@ -88,7 +103,8 @@
 
 <script setup lang="ts">
 import ButtonS from '@/components/ButtonS.vue';
-import { watch, defineProps, ref, createApp } from 'vue';
+import { watch, ref } from 'vue';
+import TableBody from './TableBody.vue';
 
 const tableHead = [
     {key: 'edit', value: '編集', require: false}, 
@@ -107,10 +123,10 @@ const tableHead = [
 ]
 
 var belowHeaderRow = [
-    {key: 'ticketType', value: '席種', require: false},
+    {key: 'ticketType', value: '券種', require: false},
     {key: 'seatType', value: '席種', require: true},
     {key: 'seatClass', value: '席種区分', require: true},
-    {key: 'media', value: '媒体', require: true},
+    {key: 'storageMedia', value: '媒体', require: true},
     {key: 'discountedPrice', value: "割引価格", },
     {key: 'adjustedPrice', value: "調整価格", require: true},
     {key: 'publicFee', value: '発行手数料', require: true},
@@ -121,38 +137,50 @@ var belowHeaderRow = [
 ]
 
 const tableBody = ref([
-    {pattern: 'onerow', status: 'new', rowCount: 1},
-    {pattern: 'onerow', status: 'edit', rowCount: 1},
-    {pattern: 'onerow', status: 'default', rowCount: 1},
+    {pattern: 'onerow', status: 'new', rowCount: 1, name: '', },
+    {pattern: 'onerow', status: 'edit', rowCount: 1, name: '取引先', },
+    {pattern: 'onerow', status: 'default', rowCount: 1, name: 'スポンサー', },
     // {pattern: 'onerow', status: 'hover', rowCount: 1},
     {
-        pattern: 'multirows', status: 'edit', rowCount: 2,
+        pattern: 'multirows', status: 'edit', rowCount: 2, name: '取引先',
         value: [],
     },
     {
-        pattern: 'multirows', status: 'default', rowCount: 2,
+        pattern: 'multirows', status: 'default', rowCount: 2, name: 'スポンサー', 
         value: [],
     },
     // {pattern: 'multirows', status: 'hover', rowCount: 2},
 ])
 
+const setChange = (index: number, newVal: any) =>{
+    tableBody.value[index] = newVal
+}
+
+watch(tableBody, (newVal) => {
+    console.log(newVal)
+}, {deep: true})
 // alert(JSON.stringify(tableBody.value))
 
-const rowCount = ref(5);
+const maxRowCount = ref(5);
 
 // watch(tableBody, (newVal) => {
 //     alert(JSON.stringify(tableBody.value))
 // }, {deep: true})
 
-const setEdit = (row: any) => {
-    row.status = 'edit'
-    alert(row.status)
-}
+// const addRowCount = (row: any) => {
+//     row.rowCount++;
+//     if
+// }
 
-const setSave = (row: any) => {
-    row.status = 'default'
-    alert(row.status)
-}
+// const setEdit = (row: any) => {
+//     row.status = 'edit'
+//     alert(row.status)
+// }
+
+// const setSave = (row: any) => {
+//     row.status = 'default'
+//     alert(row.status)
+// }
 
 </script>
 
@@ -229,13 +257,13 @@ input[type="number"] {
 tbody {
 
     border: 1px solid rgba(0, 0, 0, 0.2);
-    &.onerow {
+    // &.onerow {
 
-    }
+    // }
 
-    &.multirows {
+    // &.multirows {
 
-    }
+    // }
     &.default {
         background-color: #FFFFFF;
     }
@@ -250,78 +278,6 @@ tbody {
 
     &:hover {
         background-color:  #FCE8EA;
-    }
-
-    td {
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        padding: 12px;
-        height: auto;
-        // display: table-cell;
-        // align: center;
-        &.action {
-            border: none;
-            &.edit {
-                
-                padding-left: 16px;
-            }
-            &.delete {
-
-                padding-right: 16px;
-            }
-        }
-
-        &.name {
-            gap: 4px;
-            // width: 136px;
-            // height: 32px;
-            border-radius: 4px;
-        }
-        
-        .customer-setting {
-            // position: fixed    ;
-            @include base.rowFlex($justifyContent: auto);
-            // margin: auto;
-            // justify-content: center;
-            // text-align: center;
-            width: 27vw;
-            padding: 8px;
-            // height: auto;
-            // vertical-align: center;
-            // padding: 12px;
-            gap: 8px;
-            overflow: hidden;
-            text-overflow: ellipsis; 
-            .customer-choose {
-                // @include base.autoLayout($order: 0, $grow: 0);
-                margin: 8px;
-                margin-right: 2px;
-            }
-            .customer {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                // @include base.autoLayout($order: 1, $grow: 0);
-                .customer-info {
-                    display: flex;
-                    flex-direction: row;
-                    gap: 8px;
-                }
-                .note-option {
-                    color:#727578;
-                }
-            }
-        }
-    }
-
-    .ticketType {
-        @include base.rowFlex($justifyContent: auto);
-        border: none;
-        // border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-        // border-right: 1px solid rgba(0, 0, 0, 0.2);
-            // padding: 8px;
-        // height: auto;
-        // padding: 16px;
-        // padding: 0;
     }
     
 }
