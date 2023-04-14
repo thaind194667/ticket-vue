@@ -1,7 +1,7 @@
 <template>
-    <div >
-        <div> {{ value }} </div>
-        <div>
+    <div :class="`dropdown ${type} ${status}`">
+        <div :class="`text ${status}`"> {{ value }} </div>
+        <div class="button">
             <ButtonS 
             v-if="status !== 'default'" 
             pattern="noborder" 
@@ -16,7 +16,8 @@ import ButtonS from '@/components/ButtonS.vue';
 
 const props = defineProps({
     status: String,
-    value: String
+    value: String,
+    type: String
 })
 
 const open = ref(true);
@@ -25,13 +26,59 @@ const open = ref(true);
 <style scoped lang="scss">
 @use '@/assets/base';
 * {
+    
+}
+.dropdown {
+    background-color: white;
+
+    &.new {
+        color: #87898B;
+    }
+
+    &.default {
+        background: none;
+    }
+
+    &:not(.default) {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
     border-radius: 4px;
-    @include base.rowFlex($padding: 8px, $justifyContent: auto);
+    @include base.rowFlex($padding: 0px, $justifyContent: center);
     gap: 4px;
-    @include base.autoLayout($order: 0, $grow: 1, $align: stretch);
+    // @include base.autoLayout($order: 0, $grow: 1, $align: stretch);
     // background-color: white;
-    &:hover {
-        cursor: pointer;
+    
+
+    &.long {
+        width: 128px;
+        height: 38px;
+    }
+
+    &.short {
+        width: 80px;
+        height: 38px;
+    }
+
+    
+    .text {
+        padding-left: 8px;
+        @include base.autoLayout($order: 0, $grow: 1, $align: auto);
+        font-family: 'Hiragino Kaku Gothic ProN';
+        font-style: normal;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .button {
+        @include base.autoLayout($order: 1, $grow: 0, $align: auto);
+        display: block;
+        padding: 15px;
+        // float: right;
+        // width: 24px;
     }
 }
+
 </style>

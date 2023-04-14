@@ -17,6 +17,7 @@ import Table from './Table/Table.vue';
     /* Auto layout */
     @include base.columnFlex;
     gap: 24px;
+    height: 100%;
     // width: 1112px;
     // height: 858px;
     /* Inside auto layout */

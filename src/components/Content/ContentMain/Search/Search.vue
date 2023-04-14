@@ -59,15 +59,16 @@
 <script setup lang="ts">
 
 import {ref} from 'vue';
+import {dateFormatDayOFWeek} from '@/utility'
 const raceID = ref('');
 const raceName = ref('');
 // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土']
-const d = new Date();
-const dateFormat = (date: Date) => {
-    return date.toLocaleDateString("ja-JP") + `(${dayOfWeek[date.getDay()]})`
-}
-const defaultDate = dateFormat(d)
+// const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土']
+// const d = new Date();
+// const dateFormat = (date: Date) => {
+//     return date.toLocaleDateString("ja-JP") + `(${dayOfWeek[date.getDay()]})`
+// }
+const defaultDate = dateFormatDayOFWeek(new Date())
 const fromDate = ref()
 const toDate = ref()
 const open = ref(true);

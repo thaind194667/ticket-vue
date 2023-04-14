@@ -1,28 +1,27 @@
 <template>
     <div class="above-table">
         <div class="above-table-btn">
-            <!-- <button class="signup-btn">
-                新規登録
-            </button> -->
-            <ButtonS value="新規登録" pattern="red" />
-            <!-- <ImportIcon /> -->
-            <ButtonS value="設定情報出力" pattern="line" showIcon="設定情報出力" :textBefore="false"/>
-            <ButtonS value="初期化" pattern="line short" />
-            <!-- <button class="output-btn">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1 2C1 0.895431 1.89543 0 3 0H9.17157C9.70201 0 10.2107 0.210714 10.5858 0.585786L14.4142 4.41421C14.7893 4.78929 15 5.29799 15 5.82843V14C15 15.1046 14.1046 16 13 16H3C1.89543 16 1 15.1046 1 14V2ZM7.63272 4.39759C7.83068 4.18329 8.16932 4.18329 8.36728 4.39759L10.6888 6.91073C10.9846 7.23097 10.7575 7.75 10.3215 7.75H9V11.5C9 11.7761 8.77614 12 8.5 12H7.5C7.22386 12 7 11.7761 7 11.5V7.75H5.67846C5.2425 7.75 5.01536 7.23096 5.31119 6.91072L7.63272 4.39759Z" fill="#202529"/>
-                </svg>
-                設定情報出力
-            </button>
-            <button class="init-btn">
-                初期化
-            </button> -->
+            <ButtonS value="新規登録" 
+                pattern="red" 
+                @click="addRecord"/>
+            <ButtonS value="設定情報出力" 
+                pattern="line" 
+                showIcon="設定情報出力" 
+                :textBefore="false"/>
+            <ButtonS value="初期化" 
+                pattern="line long" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import ButtonS from '@/components/ButtonS.vue';
+const emit = defineEmits(['addRecord']);
+
+const addRecord = () => {
+    emit('addRecord')
+}
+
 // import ImportIcon from './icon/import_export.svg?component';
 </script>
 
@@ -31,6 +30,7 @@ import ButtonS from '@/components/ButtonS.vue';
 .above-table {
     /* above_table */
     /* Auto layout */
+    position: sticky;
     @include base.rowFlex($justifyContent: space-between);
     gap: 24px;
     // width: 1112px;
