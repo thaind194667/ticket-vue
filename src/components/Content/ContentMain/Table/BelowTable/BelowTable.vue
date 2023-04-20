@@ -1,6 +1,6 @@
 <template>
     <div class="below-table">
-        <div class="pager">
+        <div class="pager" v-if="!empty">
             <ButtonS 
             pattern="grey"
             value="前へ"
@@ -55,8 +55,10 @@
 
         </div>
 
+        <div class="pager" v-else></div>
+
         <div class="table-info">
-            全 {{ maxRow }} 件中 {{ startIndex }} 件 〜 {{ startIndex + rowsInPage - 1 }} 件を表示
+            全 {{ maxRow }} 件中 {{ empty ? 0 :startIndex }} 件 〜 {{ empty ? 0 :startIndex + rowsInPage - 1 }} 件を表示
             <ButtonS 
             pattern="grey"
             :is-round="true"
@@ -77,6 +79,7 @@ const emit = defineEmits(['changePage'])
 const props = defineProps({
     // maxRowCount: {type: Number, required: true},
     // currentRow: {type: Number, required: true},
+    empty: {type: Boolean, required: true},
     maxRow: {type: Number, required: true},
     maxPage: {type: Number, required: true},
     currentPage: {type: Number, required: true},
@@ -91,8 +94,10 @@ const getList = () => {
     const cur = props.currentPage;
     const max = props.maxPage;
     if(max <= 6) {
-        for(var i = 1; i <= max; i++)
+        numList.value = []
+        for(var i = 1; i <= max; i++) {
             numList.value.push(i);
+        }
         frontHas.value = backHas.value = false
     }
     else {
@@ -111,7 +116,6 @@ const getList = () => {
             frontHas.value = backHas.value = true
         }
     }
-    console.log(numList.value);
 }
 
 onBeforeMount(() => {

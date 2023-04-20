@@ -1,8 +1,11 @@
 <template>
-    <button type="button" :class="[value, pattern, isRound ? 'round' : '']" :disabled="status === 'inactive'">
+    <button type="button" 
+    :class="[value, pattern, isRound ? 'round' : '']" 
+    :disabled="status === 'inactive'"
+    >
         <div v-if="textBefore"> {{ value }}</div>
         
-        <SvgIcon :name="showIcon + status" v-if="showIcon" />
+        <SvgIcon :name="`${showIcon}${status}`" v-if="showIcon" />
         <SvgIcon name="leftArrow" v-if="leftArrow" />
         <SvgIcon name="rightArrow" v-if="rightArrow" />
         
@@ -33,7 +36,7 @@ const props = defineProps({
 
 button {
     @include base.rowFlex($padding: 4px 8px);
-    gap: 8px;
+    // gap: 8px;
     border-radius: 4px;
     font-family: 'Hiragino Kaku Gothic ProN';
     font-style: normal;

@@ -46,11 +46,8 @@ const open = ref(true);
     }
 
     border-radius: 4px;
-    @include base.rowFlex($padding: 0px, $justifyContent: center);
-    gap: 4px;
-    // @include base.autoLayout($order: 0, $grow: 1, $align: stretch);
-    // background-color: white;
-    
+    @include base.rowFlex($padding: 0px, $justifyContent: auto);
+    // gap: 6px;
 
     &.long {
         width: 128px;
@@ -64,6 +61,7 @@ const open = ref(true);
 
     
     .text {
+        // display: inline;
         padding-left: 8px;
         @include base.autoLayout($order: 0, $grow: 1, $align: auto);
         font-family: 'Hiragino Kaku Gothic ProN';
@@ -71,13 +69,19 @@ const open = ref(true);
         font-weight: 300;
         font-size: 12px;
         line-height: 18px;
+        // align-self: stretch;
+        // width: 100%;
+        max-width: calc(100% - 34px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .button {
-        @include base.autoLayout($order: 1, $grow: 0, $align: auto);
+        // @include base.autoLayout($order: 1, $grow: 1, $align: auto);
         display: block;
-        padding: 15px;
+        padding: 8px;
         // float: right;
-        // width: 24px;
+        max-width: 24px;
     }
 }
 

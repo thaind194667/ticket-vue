@@ -3,15 +3,18 @@
         <textarea :class="`input-field ${status} ${type}`"
             :placeholder="placehoder"
             v-if="type === 'text long'"
-            >
+            disabled
+        >
 
             {{ value + unit }}
         </textarea>
 
         <input v-else
+            type="text"
             :class="`input-field ${status} ${type}`" 
             :placeholder="placehoder" 
             :value="value + unit" 
+            disabled
         />
     </div>
     <div class="fieldwrap" v-else>
@@ -49,7 +52,7 @@ import {ref} from 'vue'
 import ButtonS from '@/components/ButtonS.vue';
 const props = defineProps({
     status: { type: String, required: true },
-    value: { default: '' },
+    value: {type: String, default: null, required: false },
     type: { type: String, required: true },
     icon: { type: String },
     unit: { type: String, default: '' },
@@ -93,6 +96,7 @@ const setInputValue = (value: string) => {
         // border: 1px solid rgba(0, 0, 0, 0.1);
         margin: 0;
         margin-right: 8px;
+        @include base.textOverflow();
 
         .inside-text {
             flex-grow: 1;
@@ -119,9 +123,9 @@ const setInputValue = (value: string) => {
             &.short {
                 width: 120px;
             }
-
             &.long {
                 width: 320px;
+                // text-overflow: ellipsis;
                 height: calc(100% - 16px);
                 textarea {
                     height: 100%;
