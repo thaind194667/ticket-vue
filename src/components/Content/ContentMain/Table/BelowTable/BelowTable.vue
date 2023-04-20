@@ -12,20 +12,20 @@
             <ButtonS 
             pattern="grey"
             :is-round="true"
-            v-if="maxPage > 3 && currentPage - 2 > 1"
+            v-if="numList[0] !== 1"
             :value="(1).toString()"
             :status="1 === currentPage ? 'inactive' : ''"
             @click="changePage(1)"
             />
 
             <div 
-            v-if="numArray[0] - 1 > 1"
+            v-if="frontHas"
             > ... </div>
 
             <ButtonS 
             pattern="grey"
             :is-round="true"
-            v-for="val in numArray"
+            v-for="val in numList"
             :key="`page${val}`"
             :value="val.toString()"
             :status="val === currentPage ? 'inactive' : ''"
@@ -33,13 +33,13 @@
             />
             
             <div 
-            v-if="numArray[2] + 1 < maxPage"
+            v-if="backHas"
             > ... </div>
 
             <ButtonS 
             pattern="grey"
             :is-round="true"
-            v-if="maxPage > 3 && currentPage + 2 < maxPage"
+            v-if="numList[numList.length - 1] !== maxPage"
             :value="(maxPage).toString()"
             :status="maxPage === currentPage ? 'inactive' : ''"
             @click="changePage(maxPage)"
@@ -70,7 +70,7 @@
 <script setup lang="ts">
 import ButtonS from '@/components/ButtonS.vue';
 
-import { onBeforeMount, ref, watch } from 'vue';
+import { onBeforeMount, ref, watch, onBeforeUpdate } from 'vue';
 
 const emit = defineEmits(['changePage'])
 
@@ -84,50 +84,50 @@ const props = defineProps({
     startIndex: {type: Number, required: true},
 })
 
-const numArray = ref<number[]>([])
-const getThree = () => {
+const numList = ref<Array<any>>([])
+const frontHas = ref(false)
+const backHas = ref(false)
+const getList = () => {
     const cur = props.currentPage;
     const max = props.maxPage;
-    if(max > 3) {
-        if(cur <= 3) numArray.value = [1, 2, 3]
-        else if(cur + 2 < max) {
-            numArray.value = [cur - 1, cur, cur + 1]
-        }
-        else {
-            numArray.value = [max - 2, max - 1, max];
-            // for(var i = max; i >= max - 2; i++)
-            // numArray.push(i);
-        }
+    if(max <= 6) {
+        for(var i = 1; i <= max; i++)
+            numList.value.push(i);
+        frontHas.value = backHas.value = false
     }
     else {
-        for(var i = 1; i <= max; i++)
-            numArray.value.push(i);
+        if(cur <= 3)  {
+            numList.value = [1, 2, 3, 4]
+            frontHas.value = false
+            backHas.value = true
+        }
+        else if(cur + 2 >= max) {
+            numList.value = [max - 3, max - 2, max - 1, max]
+            frontHas.value = true
+            backHas.value = false
+        }
+        else {
+            numList.value = [ cur - 1, cur, cur + 1 ]
+            frontHas.value = backHas.value = true
+        }
     }
+    console.log(numList.value);
 }
 
 onBeforeMount(() => {
-    getThree()
-    // numArray = getThree();
+    getList()
+})
+
+onBeforeUpdate(() => {
+    getList()
 })
 
 const changePage = (index: number) => {
     if(index !== props.currentPage){
         emit('changePage', index)
-        // getThree()
     }
 }
 
-watch(numArray, (newVal) => {
-
-}, {deep: true})
-
-watch(() => props.currentPage, () => {
-    getThree()
-})
-
-// watch(props.currentPage, (newVal) => {
-//     getThree()
-// }, {deep: true})
 </script>
 
 <style lang="scss" scoped>
