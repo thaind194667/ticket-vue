@@ -6,13 +6,15 @@ const mergeText = (a: String, b: String) => {
 
 const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土']
 
-const dateFormatDayOFWeek = (date: Date) => {
-    return `${moment().format('YYYY/MM/DD')} (${dayOfWeek[moment().day()]})`
+const dateFormatDayOFWeek = (date: string) => {
+    var momentDate = moment(date)
+    return `${momentDate.format('YYYY/MM/DD')} (${dayOfWeek[momentDate.day()]})`
     // return `${date.toLocaleDateString("ja-JP")}(${dayOfWeek[date.getDay()]})`
 }
 
-const dateFormat = (date: Date) => {
-    return `${moment().format('YYYY/MM/DD HH:mm')}`
+const dateFormat = (date: string) => {
+    var momentDate = moment(date)
+    return `${momentDate.format('YYYY/MM/DD HH:mm')}`
 }
 
 // const timeFormat = (date: Date) => {

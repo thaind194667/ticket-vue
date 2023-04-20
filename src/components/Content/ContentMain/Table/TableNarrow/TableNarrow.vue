@@ -104,9 +104,10 @@ watch(() => props.startIndex, () => {
     // force
 }, {deep: true})
 
-// watch(props.tableBody, (newVal) => {
+watch(() => props.tableBody, () => {
+    tableBodyRows.value = props.tableBody.slice(props.startIndex, props.endIndex)
 
-// }, {deep: true})
+}, {deep: true})
 
 
 

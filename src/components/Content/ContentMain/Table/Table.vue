@@ -138,7 +138,7 @@ const defaultRow = {
     value: [],
 }
 
-const rowsInPage = ref(3);
+const rowsInPage = ref(1);
 const currentPage = ref(1);
 const maxRow = ref(0);
 const maxPage = ref(0);
@@ -181,6 +181,7 @@ const changePage = (index: number) => {
 
 watch(tableBody, (newVal) => {
     console.log(newVal)
+    calBegin()
 }, {deep: true})
 
 // watch(tableBodyRows, (newVal) => {

@@ -13,7 +13,11 @@
         </td>
 
         <td v-if="count === 1" class="name" :rowspan="row.rowCount">
-            <EditField :status="row.status" type="text short" placehoder="カテゴリ名" :value="row.name" />
+            <EditField 
+            :status="row.status" 
+            type="text short" 
+            placehoder="カテゴリ名" 
+            :value="row.name" />
             <!-- <input type="text" placeholder="カテゴリ名" :class="row.status === 'new' ? 'new' : ''" v-model="row.name"
                 :disabled="row.status === 'default'" /> -->
         </td>
@@ -131,7 +135,7 @@
         </td>
 
         <td class="purchaseLimit">
-            <EditField type="number big" :status="row.status" value="3000" unit="枚" />
+            <EditField type="number medium" :status="row.status" value="3000" unit="枚" />
             <!-- <span :class="'number-input'+row.status" role="textbox" :contenteditable="row.status === 'edit'">6000</span>枚 -->
         </td>
 

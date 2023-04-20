@@ -26,7 +26,7 @@
                         レースID    
                     </div>
                     <div class="input-text">
-                        <input type="text" name="raceID" placeholder="12345678" v-model="raceID"/>
+                        <input type="text" name="raceID" placeholder="12345678" v-model="result.IdRace"/>
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                         レース名
                     </div>
                     <div class="input-text">
-                        <input type="text" name="raceName" placeholder="SUPER GT" v-model="raceName"/>
+                        <input type="text" name="raceName" placeholder="SUPER GT" v-model="result.NmRace"/>
                     </div>
                 </div>
             </div>
@@ -45,9 +45,9 @@
                     開催期間
                 </div>
                 <div class="date-input">
-                        <input type="text" name="fromDate" :placeholder="defaultDate" v-model="fromDate"/>
+                        <input type="text" name="fromDate" :placeholder="defaultDate" v-model="result.YmdOpenStart"/>
                      ~
-                        <input type="text" name="toDate" :placeholder="defaultDate" v-model="toDate"/>
+                        <input type="text" name="toDate" :placeholder="defaultDate" v-model="result.YmdOpenEnd"/>
                     
                 </div>
             </div>
@@ -58,8 +58,18 @@
 
 <script setup lang="ts">
 
-import {ref} from 'vue';
+import {ref, type PropType} from 'vue';
 import {dateFormatDayOFWeek} from '@/utility'
+type ResultPattern = {
+    IdRace: number,
+    NmRace: string,
+    YmdOpenStart: string,
+    YmdOpenEnd: string,
+}
+const props = defineProps({
+    searchRes: {type: Object as PropType<ResultPattern>, required: true},
+})
+
 const raceID = ref('');
 const raceName = ref('');
 // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -68,10 +78,12 @@ const raceName = ref('');
 // const dateFormat = (date: Date) => {
 //     return date.toLocaleDateString("ja-JP") + `(${dayOfWeek[date.getDay()]})`
 // }
-const defaultDate = dateFormatDayOFWeek(new Date())
+const defaultDate = dateFormatDayOFWeek("04/13/2023")
 const fromDate = ref()
 const toDate = ref()
 const open = ref(true);
+
+const result = ref({...props.searchRes})
 
 const foldSearch = () => {
     open.value = !open.value;
