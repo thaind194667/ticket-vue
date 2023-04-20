@@ -22,3 +22,7 @@
     align-self: $align;
 }
 
+@mixin textOverflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

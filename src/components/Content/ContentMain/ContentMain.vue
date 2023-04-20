@@ -1,15 +1,15 @@
 <template>
     <div class="contents-main">
         <Search :search-res="searchRes" />
-        <Table />
+        <TableContent :table-data="tableData"/>
     </div>
 </template>
 
 <script setup lang="ts">
 import Search from './Search/Search.vue';
-import Table from './Table/Table.vue';
+import TableContent from './Table/TableContent.vue';
 import data from '@/data.json'
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, reactive } from 'vue';
 import { dateFormat, dateFormatDayOFWeek } from '@/utility';
 
 type ResultPattern = {
@@ -19,8 +19,8 @@ type ResultPattern = {
     YmdOpenEnd: string,
 }
 
-const tableData = ref([])
-const searchRes = ref<ResultPattern>({
+const tableData = reactive(data.ListCategoriesSetting.CategoriesSettings)
+const searchRes = reactive<ResultPattern>({
     IdRace: data.IdRace,
     NmRace: data.NmRace,
     YmdOpenStart: dateFormatDayOFWeek(data.YmdOpenStart),
@@ -32,8 +32,9 @@ onBeforeMount(() => {
     // console.log( dateFormatDayOFWeek(data.YmdOpenStart) )
     console.log('records ' + data.ListCategoriesSetting.CntRecords)
     // console.log('setting ' + JSON.stringify(data.ListCategoriesSetting.CategoriesSettings) );
-    let cateSetting = data.ListCategoriesSetting.CategoriesSettings
-    console.table(cateSetting);
+    // let cateSetting = data.ListCategoriesSetting.CategoriesSettings
+    // console.table(cateSetting);
+    // console.log(tableData)
     
 })
 

@@ -1,121 +1,164 @@
 <template>
-    <tr v-for="count in row.rowCount" :class="row.status" :key="`row${count}`">
-
-        <td v-if="count === 1" class="action edit" :rowspan="row.rowCount">
-            <ButtonS class="row-btn" :pattern="row.status" showIcon="edit" v-if="row.status === 'default'"
-                @click="setEdit" />
-            <ButtonS class="row-btn" :pattern="row.status" showIcon="save" v-else @click="setSave" />
+    <tr v-for="count in rowCount" 
+    :class="`table-row ${row.status}`" 
+    :key="`row${count}`"
+    >
+        <td v-if="count === 1" class="action edit" 
+        :rowspan="rowCount"
+        >
+            <ButtonS v-if="row.status === 'default'"
+            class="row-btn" 
+            :pattern="row.status" 
+            showIcon="edit" 
+            @click="setEdit" 
+            />
+            <ButtonS v-else 
+            class="row-btn" 
+            :pattern="row.status" 
+            showIcon="save"  
+            @click="setSave" 
+            />
         </td>
 
-        <td v-if="count === 1" class="action delete" :rowspan="row.rowCount">
-            <ButtonS class="row-btn" :pattern="row.status" showIcon="delete"
-                :status="row.status === 'new' ? 'inactive' : ''" @click="deleteRow" />
+        <td v-if="count === 1" class="action delete" 
+        :rowspan="rowCount"
+        >
+            <ButtonS class="row-btn" 
+            :pattern="row.status" 
+            :showIcon="`delete${row.status === 'new' ? 'inactive' : ''}`"
+            :status="row.status === 'new' ? 'inactive' : ''" 
+            @click="deleteRow" 
+            />
         </td>
 
-        <td v-if="count === 1" class="name" :rowspan="row.rowCount">
+        <td v-if="count === 1" class="name" 
+        :rowspan="rowCount"
+        >
             <EditField 
             :status="row.status" 
             type="text short" 
             placehoder="カテゴリ名" 
-            :value="row.name" />
-            <!-- <input type="text" placeholder="カテゴリ名" :class="row.status === 'new' ? 'new' : ''" v-model="row.name"
-                :disabled="row.status === 'default'" /> -->
+            :value="row.NmCategory" 
+            />
         </td>
 
-        <td v-if="count === 1" :rowspan="row.rowCount">
+        <td v-if="count === 1" :rowspan="rowCount">
             <div class="customer-setting">
                 <RouterLink to="/targetCustomer">
-                    <ButtonS class="customer-choose" :pattern="`black ${row.status === 'new' ? 'newbtn' : ''}`"
-                        v-if="row.status !== 'default'" value="設定" />
+                    <ButtonS v-if="row.status !== 'default'"
+                    class="customer-choose" 
+                    :pattern="`black ${row.status === 'new' ? 'newbtn' : ''}`"
+                    value="設定" 
+                    />
                 </RouterLink>
-                <div class="customer" v-if="row.status !== 'new'">
+                <div v-if="row.status !== 'new'" class="customer" >
                     <div class="customer-info">
                         {{
-                            mergeText('個人以外',
-                                'A, B, CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                            mergeText(row.FlgCustomer ? '個人' : '個人以外', customerNames)
                         }}
                     </div>
-                    <div class="note-option">
+                    <div class="note-option" v-if="row.FlgPayAfter">
                         後日請求あり
                     </div>
                 </div>
             </div>
         </td>
 
-        <td v-if="count === 1" class="discount" :rowspan="row.rowCount">
-            <EditField type="number" :status="row.status" unit="%" value="99" />
-            <!-- <span :class="'number-input'+row.status" role="textbox" :contenteditable="row.status === 'edit'">99</span>% -->
-            <!-- <input 
-            type="number" 
-            min="0" 
-            max="99" 
-            placeholder="-" 
-            :disabled="row.status === 'default'"
-            value="99" />  -->
+        <td v-if="count === 1" class="sale-rate" 
+        :rowspan="rowCount"
+        >
+            <EditField type="number" 
+            :status="row.status" 
+            unit="%" 
+            :value="row.SaleRate.toString()" />
         </td>
 
         <td>
             <div class="ticketType hasDropBox">
-                <div class="modify-btn" v-if="row.status !== 'default'">
-                    <ButtonS pattern="minus" showIcon="minus" :status="row.pattern === 'onerow' ? 'inactive' : ''"
-                        @click="minusMiniRow" />
+                <div v-if="row.status !== 'default'"
+                class="modify-btn"
+                >
+                    <ButtonS 
+                    pattern="minus" 
+                    showIcon="minus" 
+                    :status="rowCount === 1 ? 'inactive' : ''"
+                    @click="minusMiniRow(count)" 
+                    />
 
-                    <ButtonS pattern="plus" showIcon="plus" @click="plusMiniRow" />
+                    <ButtonS 
+                    pattern="plus" 
+                    showIcon="plus" 
+                    @click="plusMiniRow" 
+                    />
                 </div>
-                <DropDown :class="'dropdown' + row.status" class="selectTicketType" value="観戦券" :status="row.status"
-                    type="long">
+                <DropDown type="long"
+                :class="`dropdown selectTicketType ${row.status}`" 
+                :value="row.TicketSettingInformations[count - 1].NmTypeTicket" 
+                :status="row.status"
+                >
                 </DropDown>
-                <!-- <div class="selectTicketType">
-                    <div> 観戦券 &emsp;&emsp;</div>
-                    <div>
-                        <ButtonS 
-                        v-if="row.status !== 'default'" 
-                        pattern="noborder" 
-                        :showIcon="row.status !== 'default' ? 'dropdown' : ''" />
-                        
-                    </div>
-                </div> -->
             </div>
         </td>
 
         <td class="seatType">
             <div class="hasDropBox">
-                <DropDown :class="'dropdown' + row.status" class="selectSeatType" value="ゲスト観戦券" :status="row.status"
-                    type="long" />
+                <DropDown type="long" 
+                :class="`dropdown selectSeatType ${row.status}`"
+                :value="row.TicketSettingInformations[count - 1].TypeSeats[0].NmTypeSeat" 
+                :status="row.status"
+                />
             </div>
         </td>
 
         <td class="seatClass">
             <div class="hasDropBox">
-                <DropDown :class="'dropdown' + row.status" class="selectSeatClass" value="大人" :status="row.status"
-                    type="short" />
+                <DropDown type="short"
+                :class="`dropdown selectSeatClass ${row.status}`"
+                :value="row.TicketSettingInformations[count - 1].TypeSeats[0].FlgInvitationTicket ? '子供': '大人'" 
+                :status="row.status"
+                />
             </div>
         </td>
 
         <td class="storageMedia">
             <div class="hasDropBox">
-                <DropDown :class="'dropdown' + row.status" class="selectStorageMedia" value="電子" :status="row.status"
-                    type="short" />
+                <DropDown type="short"
+                :class="`dropdown selectStorageMedia ${row.status}`" 
+                :value="getSellSetting(count - 1).NmMedia" 
+                :status="row.status"
+                />
             </div>
         </td>
 
         <td class="discountedPrice">6,600円</td>
 
         <td class="adjustedPrice">
-            <EditField type="number big" :status="row.status" value="3000" unit="円" />
-            <!-- <span :class="'number-input'+row.status" role="textbox" :contenteditable="row.status === 'edit'">6000</span>円 -->
+            <EditField type="number big" 
+            :status="row.status"             
+            :value="getSellSetting(count - 1).AdjustedPrice.toString()" 
+            unit="円" 
+            />
         </td>
 
         <td class="publicFee">
-            <EditField type="number big" :status="row.status" value="110" unit="円" />
-            <!-- <span :class="'number-input'+row.status" role="textbox" :contenteditable="row.status === 'edit'">6000</span>円 -->
+            <EditField type="number big" 
+            :status="row.status" 
+            :value="getSellSetting(count - 1).Price.toString()" 
+            unit="円" 
+            />
         </td>
 
         <td>
             <div class="publicPeriod">
-                <DateChoose :status="row.status" /> ~
-                <DateChoose :status="row.status" />
-                <label class="checkbox-round" v-if="row.status !== 'default'">
+                <DateChoose :status="row.status" 
+                :value="dateFormat(getSellSetting(count - 1).DtPublicStart)"
+                /> ~
+                <DateChoose :status="row.status" 
+                :value="dateFormat(getSellSetting(count - 1).DtPublicEnd)"
+                />
+                <label v-if="row.status !== 'default'"
+                class="checkbox-round" 
+                >
                     <input type="checkbox" name="public" id="public" />
                     <span class="checkbox-label" for="public"></span>
                     非公開
@@ -125,33 +168,49 @@
 
         <td>
             <div class="salePeriod">
-                <DateChoose :status="row.status" /> ~
-                <DateChoose :status="row.status" />
+                <DateChoose :status="row.status" 
+                :value="dateFormat(getSellSetting(count - 1).DtSellStart)"
+                /> ~
+                <DateChoose :status="row.status" 
+                :value="dateFormat(getSellSetting(count - 1).DtSellEnd)"
+                />
             </div>
         </td>
 
         <td class="electricTicketPublicDate">
-            <DateChoose :status="row.status" />
+            <DateChoose 
+            :status="row.status" 
+            :value="dateFormat(getSellSetting(count - 1).DtGenerateElectricTicket)"
+            />
         </td>
 
         <td class="purchaseLimit">
-            <EditField type="number medium" :status="row.status" value="3000" unit="枚" />
+            <EditField type="number medium" 
+            :status="row.status" 
+            :value="getSellSetting(count - 1).CntMaxAtOnce.toString()" 
+            unit="枚" />
             <!-- <span :class="'number-input'+row.status" role="textbox" :contenteditable="row.status === 'edit'">6000</span>枚 -->
         </td>
 
-        <td v-if="count === 1" :rowspan="row.rowCount" class="lotterySetting">
-            <ButtonS pattern="black settingbtn" value="設定" v-if="row.status !== 'default'"></ButtonS>
+        <td v-if="count === 1" 
+        :rowspan="rowCount" 
+        class="lotterySetting">
+            <ButtonS v-if="row.status !== 'default'"
+            pattern="black settingbtn" 
+            value="設定" 
+            />
             <div v-else>観戦券グループA</div>
         </td>
 
-        <td v-if="count === 1" :rowspan="row.rowCount" class="note">
-
-            <EditField :status="row.status" type="text long" />
-            <!-- <div :class="'number-input'+row.status" role="textbox" :contenteditable="row.status === 'edit'">aaa
-            </div> -->
+        <td v-if="count === 1" 
+        :rowspan="rowCount" 
+        class="note"
+        >
+            <EditField type="text long" :status="row.status "
+            :value="row.TxtNote || '-'"
+            />
         </td>
         
-
     </tr>
 </template>
 
@@ -160,34 +219,104 @@ import ButtonS from '@/components/ButtonS.vue';
 import DropDown from './DropDown.vue';
 import EditField from './EditField.vue';
 import DateChoose from './DateChoose.vue';
-import { ref, watch, type PropType } from 'vue'
-import { mergeText } from '@/utility';
+import { ref, watch, type PropType, reactive, onBeforeMount, onBeforeUpdate, onMounted, onUpdated } from 'vue';
+import { mergeText, dateFormat } from '@/utility';
 
-type TableBody = {
-    pattern: string,
-    status: string,
-    rowCount: number,
-    name: string,
-    value: Array<Object>,
+type TableRow = {
+    IdCategory: number,
+    FlgCustomer: number,
+    NmCategory: string,
+    SaleRate: number,
+    FlgPayAfter: number,
+    TxtNote: string | null,
+    CategoryCustomers: Array<any>,
+    TicketSettingInformations: Array<any>,
+    CategoryLotteryGroups: Array<any>,
+    status: string
 }
 
+const defaultTicketSettingInformations = {
+    IdTypeTicket: 0,
+    NmTypeTicket: '',
+    TypeSeats: [],
+}
+
+// type SellSettingType = {
+//     IdCategory: number,
+//     IdRaceTicketDetail:number,
+//     IdTypeTicket:number,
+//     IdTypeSeat:number,
+//     NmTypeSeat: string,
+//     NmTypeTicket:string,
+//     CategorySeat:string | null,
+//     AdjustedPrice:number,
+//     GenerateFee:number,
+//     DtSellStart:string,
+//     DtSellEnd:string,
+//     DtPublicStart:string,
+//     DtPublicEnd:string,
+//     DtGenerateElectricTicket:string,
+//     FlgPublic:number,
+//     CntMaxAtOnce:number,
+//     Price:number,
+//     FlgMedia:number,
+//     NmMedia:string,
+// }
+
 const props = defineProps({
-    myRow: { type: Object as PropType<TableBody>, required: true },
+    myRow: { type: Object as PropType<TableRow>, required: true },
     index: { type: Number }
 })
 
 const emit = defineEmits(['change', 'deleteRow'])
 
-const row = ref({ ...props.myRow });
+const row = reactive<TableRow>(props.myRow);
+const rowCount = ref<number>(0);
+const customerNames = ref<string>('');
+// const sellSetting = reactive<SellSettingType>
+
+const getVal = () => {
+    Object.assign(row, props.myRow)
+    rowCount.value = row.TicketSettingInformations.length
+    
+    for(var i = 0; i < row.CategoryCustomers.length; i++) {
+        if(i !== 0) customerNames.value += '、'
+        customerNames.value += `${row.CategoryCustomers[i].NmCategoryCustomer}`
+    }
+}
+
+const getSellSetting = (index: number) => {
+    return row.TicketSettingInformations[index].TypeSeats[0].CategorySellSetting[0]
+}
+
+onBeforeMount(() => {
+    getVal()
+    console.log('create ' + rowCount.value);
+})
+
+// onMounted(() => {
+//     console.log('mounted ' + rowCount.value);
+    
+// })
+
+onBeforeUpdate(() => {
+    getVal()
+    console.log('create ' + rowCount.value);
+})
+
+onUpdated(() => {
+
+    console.log('mounted ' + rowCount.value);
+})
 
 const setEdit = () => {
-    row.value.status = 'edit'
-    emit('change', props.index, row.value)
+    row.status = 'edit'
+    emit('change', props.index, row)
 }
 
 const setSave = () => {
-    row.value.status = 'default'
-    emit('change', props.index, row.value)
+    row.status = 'default'
+    emit('change', props.index, row)
 }
 
 const deleteRow = () => {
@@ -195,24 +324,31 @@ const deleteRow = () => {
 }
 
 const plusMiniRow = () => {
-    row.value.rowCount++;
-    if (row.value.rowCount > 1) row.value.pattern = 'multirows'
-    emit('change', props.index, row.value)
+    rowCount.value++;
+    row.TicketSettingInformations.push(defaultTicketSettingInformations)
+    emit('change', props.index, row)
 }
 
-const minusMiniRow = () => {
-    row.value.rowCount--;
-    if (row.value.rowCount === 1) row.value.pattern = 'onerow'
-    emit('change', props.index, row.value)
+const minusMiniRow = (index: number) => {
+    console.log(index)
+    
+    rowCount.value--
+    row.TicketSettingInformations.splice(index - 1, 1)
+    emit('change', props.index, row)
 }
 
 watch(() => props.myRow, () => {
-    console.log(props.myRow);
+    console.log(props.myRow)
+    getVal()
+    console.log(rowCount.value)
+    
+    // row = props.myRow;
 }, { deep: true })
 
 watch(row, (newVal) => {
     emit('change', props.index, newVal)
 }, { deep: true })
+
 </script>
 
 <style scoped lang="scss">
@@ -241,16 +377,11 @@ td {
         padding: 0px 16px;
     }
 
-    // display: table-cell;
-    // align: center;
     &.action {
-        // display: flex;
-        // flex-direction: row;
-        // font-size: 0;
         border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         padding: 13px 16px;
         $gap : 3px;
-        // gap: 8px;
 
         &.edit {
             padding-right: $gap;
@@ -307,10 +438,6 @@ td {
 
     .ticketType {
         padding: 0px 8px;
-        // @include base.rowFlex($justifyContent: auto);
-        // border: none;
-        // box-sizing: border-box;
-        // @include base.autoLayout($order: 0, $grow: 0, $align: stretch);
 
         .modify-btn {
             @include base.rowFlex();
@@ -363,7 +490,6 @@ td {
         }
         span{
             display: inline-block;
-            // gap: 8xp;
             position: relative;
             border: solid 1px;
             border-radius: 99px;
@@ -376,4 +502,5 @@ td {
         }
     }
 }
+
 </style>
