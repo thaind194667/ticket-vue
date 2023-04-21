@@ -59,7 +59,7 @@
 				<div class="input-title">開催期間</div>
 				<div class="date-input">
 					<input type="text" name="fromDate" :placeholder="defaultDate" v-model="result.YmdOpenStart" />
-					~
+					～
 					<input type="text" name="toDate" :placeholder="defaultDate" v-model="result.YmdOpenEnd" />
 				</div>
 			</div>
