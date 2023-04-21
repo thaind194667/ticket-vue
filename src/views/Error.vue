@@ -1,14 +1,8 @@
 <template>
-    <div>
-        URL Not Found
-    </div>
-    <RouterLink to="/">Back home</RouterLink>
+	<div>URL Not Found</div>
+	<RouterLink to="/">Back home</RouterLink>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
