@@ -125,7 +125,7 @@
 
 		<td>
 			<div class="publicPeriod">
-				<DateChoose :status="row.status" :value="dateFormat(getSellSetting(count - 1).DtPublicStart)" /> ~
+				<DateChoose :status="row.status" :value="dateFormat(getSellSetting(count - 1).DtPublicStart)" /> ～
 				<DateChoose :status="row.status" :value="dateFormat(getSellSetting(count - 1).DtPublicEnd)" />
 				<label v-if="row.status !== 'default'" class="checkbox-round">
 					<input type="checkbox" name="public" id="public" />
@@ -139,7 +139,7 @@
 
 		<td>
 			<div class="salePeriod">
-				<DateChoose :status="row.status" :value="dateFormat(getSellSetting(count - 1).DtSellStart)" /> ~
+				<DateChoose :status="row.status" :value="dateFormat(getSellSetting(count - 1).DtSellStart)" /> ～
 				<DateChoose :status="row.status" :value="dateFormat(getSellSetting(count - 1).DtSellEnd)" />
 			</div>
 		</td>
@@ -373,7 +373,6 @@ td {
 
 .publicPeriod {
 	display: flex;
-	gap: 4px;
 	.checkbox-round {
 		&:hover {
 			cursor: pointer;
@@ -383,12 +382,12 @@ td {
 		align-items: center;
 		justify-content: center;
 		position: relative;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+		// -webkit-user-select: none;
+		// -moz-user-select: none;
+		// -ms-user-select: none;
+		// user-select: none;
 		input {
-			opacity: 0;
+			display: none;
 			cursor: pointer;
 			height: 0;
 			width: 0;
@@ -396,24 +395,27 @@ td {
 				.checked-label {
 					display: flex;
 					position: relative;
-					width: 12px;
-					height: 12px;
-					left: 2px;
-					top: 2px;
+					$radiusInside: 11px;
+					width: $radiusInside;
+					height: $radiusInside;
+					left: calc((16px - $radiusInside) / 2);
+					top:  calc((16px - $radiusInside) / 2);
 					border-radius: 99px;
 					background-color: #de2233;
 				}
 			}
 		}
-		span {
+		.checkbox-label {
 			display: flex;
 			position: relative;
-			gap: 8px;
+			margin-right: 8px;
 			border-radius: 99px;
+			border: 1px solid rgba(0, 0, 0, 0.2);
 			top: 0;
 			left: 0;
-			height: 16px;
-			width: 16px;
+			$radius: 16px;
+			height: $radius;
+			width: $radius;
 			background-color: #ffffff;
 			.checked-label {
 				display: none;

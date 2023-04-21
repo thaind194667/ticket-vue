@@ -27,8 +27,7 @@ const props = defineProps({
 	background-color: #ffffff;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
-
-	width: 148px;
+	width: 145px;
 	&.default {
 		width: 113px;
 		background: none;
@@ -41,13 +40,19 @@ const props = defineProps({
 
 	input {
 		width: 100%;
-		font-family: 'Hiragino Kaku Gothic ProN';
+		// font-family: 'Hiragino Kaku Gothic ProN';
 		font-style: normal;
 		font-weight: 300;
 		font-size: 12px;
 		line-height: 18px;
+		padding: 0;
 		&:focus {
 			outline: none;
+		}
+	}
+	.date-icon {
+		&:hover {
+			cursor: pointer;
 		}
 	}
 }
