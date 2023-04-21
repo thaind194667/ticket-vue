@@ -1,14 +1,11 @@
 <script setup lang="ts">
-
-import {  RouterView } from 'vue-router'
+import { RouterView } from 'vue-router';
 // import PageHeader from './components/PageHeader/PageHeader.vue'
 // import Content from './components/Content/Content.vue'
 </script>
 
 <template>
-    <RouterView />
+	<RouterView />
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
