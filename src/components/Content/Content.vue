@@ -1,6 +1,6 @@
 <template>
 	<div class="contents">
-		<Title />
+		<Title title_name="カテゴリ設定"/>
 		<ContentMain />
 	</div>
 </template>

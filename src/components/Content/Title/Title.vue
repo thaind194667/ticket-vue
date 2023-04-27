@@ -4,13 +4,16 @@
 			<ButtonS pattern="grey back" value="戻る" :isRound="true" :leftArrow="true" :textBefore="false" />
 		</RouterLink>
 		<div class="title">
-			<b>カテゴリ設定</b>
+			<b>{{title_name}}</b>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import ButtonS from '@/components/ButtonS.vue';
+const props = defineProps({
+	title_name: String,
+})
 </script>
 
 <style scoped lang="scss">

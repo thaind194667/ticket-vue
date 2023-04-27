@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import CategorySetting from '@/views/CategorySetting.vue';
 import LotterySetting from '@/views/LotterySetting.vue';
 import TargetCustomer from '@/views/TargetCustomer.vue';
+import TicketPurchaseList from '@/views/TicketPurchaseList.vue';
 import Error from '@/views/Error.vue';
 
 const router = createRouter({
@@ -29,6 +30,14 @@ const router = createRouter({
 			// this generates a separate chunk (About.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
 			component: TargetCustomer,
+		},
+		{
+			path: '/purchaseList',
+			name: 'ticket purchase list',
+			// route level code-splitting
+			// this generates a separate chunk (About.[hash].js) for this route
+			// which is lazy-loaded when the route is visited.
+			component: TicketPurchaseList,
 		},
 		{
 			path: '/:catchAll(.*)',

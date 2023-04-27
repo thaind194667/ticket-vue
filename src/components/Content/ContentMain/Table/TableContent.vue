@@ -11,7 +11,7 @@
 				<colgroup span="11"></colgroup>
 				<col />
 				<col />
-				<TableHead />
+				<TableHead :table-head="tableHead"  :below-header-row="belowHeaderRow"/>
 				<tbody v-for="(row, index) in tableBodyRows" :key="row.IdCategory" :class="'bodyRow ' + row.status">
 					<TableRow :myRow="row" :index="index" @change="setChange" @deleteRow="deleteRow" />
 				</tbody>
@@ -36,7 +36,7 @@ import TableRow from './TableNarrow/TableRow.vue';
 import TableHead from './TableNarrow/TableHead.vue';
 import BelowTable from './BelowTable/BelowTable.vue';
 import { ref, watch, onBeforeMount } from 'vue';
-import { newDefaultRow } from '@/utility';
+import { mergeText, newDefaultRow } from '@/utility';
 
 type TableBodyFromData = {
 	IdCategory: number;
@@ -62,6 +62,30 @@ type TableBody = {
 	CategoryLotteryGroups: Array<any>;
 	status: string;
 };
+
+const tableHead = [
+	{ key: 'action', value: mergeText('編集\xa0\xa0', '削除\xa0\xa0'), require: false, colspan: 2, rowspan: 2 },
+	{ key: 'name', value: 'カテゴリ名', require: true },
+	{ key: 'customer', value: '対象顧客', require: true },
+	{ key: 'discount', value: '全体割引', require: true },
+	{ key: 'queueSetting', value: '先着販売設定', require: false, colspan: 11, rowspan: 1 },
+	{ key: 'lotterySetting', value: '抽選設定', require: false },
+	{ key: 'note', value: '備考', require: false },
+];
+
+const belowHeaderRow = [
+	{ key: 'ticketType', value: '券種', require: false },
+	{ key: 'seatType', value: '席種', require: true },
+	{ key: 'seatClass', value: '席種区分', require: true },
+	{ key: 'storageMedia', value: '媒体', require: true },
+	{ key: 'discountedPrice', value: '割引価格', require: false },
+	{ key: 'adjustedPrice', value: '調整価格', require: true },
+	{ key: 'publicFee', value: '発行手数料', require: true },
+	{ key: 'publicPeriod', value: '公開期間', require: true },
+	{ key: 'salePeriod', value: '販売期間', require: true },
+	{ key: 'electricTicketPublicDate', value: '電子チケット発行日', require: false },
+	{ key: 'purchaseLimit', value: '購入上限数', require: true },
+];
 
 const props = defineProps({
 	tableData: { type: Array<TableBodyFromData>, required: true },

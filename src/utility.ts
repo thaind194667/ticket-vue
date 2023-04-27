@@ -73,4 +73,16 @@ const newDefaultRow = {
 	status: 'new',
 };
 
-export { mergeText, dateFormatDayOFWeek, dateFormat, moneyFormat, newDefaultRow, defaultTicketSettingInformations };
+const newDefaultTicketPurchaseRow = {
+	PurchaseID: '',
+    CustomerID: '',
+    CustomerName: '',
+    Category: '',
+    PurchasePeriod: '',
+    SaleMethod: 0,
+    PaymentMethod: 0,
+    PaymentStatus: 0, 
+	Status: 'default',
+}
+
+export { mergeText, dateFormatDayOFWeek, dateFormat, moneyFormat, newDefaultRow, defaultTicketSettingInformations, newDefaultTicketPurchaseRow };
