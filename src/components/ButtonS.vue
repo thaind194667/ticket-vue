@@ -111,7 +111,7 @@ button {
 .black {
 	padding: 8px 27px;
 	height: 32px;
-	gap: 4px;
+	// gap: 4px;
 	font-family: 'Hiragino Kaku Gothic ProN';
 	font-style: normal;
 	font-weight: 600;
@@ -130,6 +130,9 @@ button {
 	}
 	&.settingbtn {
 		padding: 8px 46px;
+	}
+	&.short {
+		padding: 8px 14px;
 	}
 }
 

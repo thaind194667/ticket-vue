@@ -49,6 +49,7 @@ const props = defineProps({
         // margin: 16px;
         // top: 0;
         // left: 0;
+        left: 37.5px;
         height: 25px;
         width: 25px;
         background-color: #eee;
