@@ -164,7 +164,7 @@ watch(
 	.table-narrow {
 		display: inline-block;
 		width: 100%;
-		overflow-x: scroll;
+		overflow-x: scroll;	
 		overflow-y: hidden;
 		border-radius: 8px 8px 0px 0px;
 	}

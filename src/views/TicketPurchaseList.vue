@@ -31,20 +31,20 @@
                             <tr>
                                 <th v-for="obj of tableHead" :key="obj.key" :id="obj.key">
                                     <CheckBox status="default" v-if="obj.key === 'checkbox'"/>
-                                    {{ obj.value }}
+                                    <pre>{{ obj.value }}</pre>
                                 </th>
                             </tr>
                             
                         </thead>
                         <tbody v-for="(row, index) in tableDataRows" :key="index" :class="`${row.Status}`">
                             <tr :class="`${index === tableDataRows.length - 1 ? 'last-row' : ''}`">
-                                <td>
+                                <td class="checkbox">
                                     <CheckBox @change="changeStatus(index)"
                                     :status="row.Status"/>
                                     <!-- <input type="checkbox" name="choose" /> -->
                                 </td>
                                 <td>
-                                    {{row.PurchaseID}}
+                                    <div>{{row.PurchaseID}}</div>
                                 </td>
                                 <td>{{ row.CustomerID }}</td>
                                 <td>{{ row.CustomerName }}</td>
@@ -52,8 +52,13 @@
                                 <td>{{ row.PurchasePeriod }}</td>
                                 <td>{{ row.SaleMethod }}</td>
                                 <td>{{ row.PaymentMethod }}</td>
-                                <td><p>{{ row.PaymentStatus }}</p></td>
-                                <td>Nothing</td>
+                                <td class="payment-method"><p>{{ row.PaymentStatus }}</p></td>
+                                <td>
+                                    <!-- <div> -->
+                                        <!-- <button style="margin: 0;">編集</button> -->
+                                        <ButtonS pattern="black short" value="編集" />
+                                    <!-- </div> -->
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -87,7 +92,7 @@ import CheckBox from '@/views/Checkbox.vue'
 import BelowTable from '@/components/Content/ContentMain/Table/BelowTable/BelowTable.vue';
 import data from '@/data_modify.json';
 import {reactive, ref, onMounted, watch} from 'vue'
-import { dateFormatDayOFWeek, newDefaultTicketPurchaseRow } from '@/utility';
+import { dateFormatDayOFWeek, newDefaultTicketPurchaseRow, dateFormat } from '@/utility';
 
 type ResultPattern = {
 	IdRace: number;
@@ -155,6 +160,7 @@ const calBegin = () => {
 onMounted(() => {
     for (let i = 0; i < data.TicketPurchaseList.length; i++) {
 		tableData.value[i] = { ...data.TicketPurchaseList[i], Status: 'checked' };
+        tableData.value[i].PurchasePeriod = dateFormat(data.TicketPurchaseList[i].PurchasePeriod);
 	}
 	calBegin();
 });
@@ -245,14 +251,21 @@ input[type="checkbox"] {
                     white-space: pre-wrap;
                     border: 1px solid rgba(0, 0, 0, 0.2);
                     border-spacing: 0;
-                    padding: 0px 8px;
-                    min-height: 64px;
+                    padding: 0;
+                    margin: 0;
+                    max-height: 64px;
                     height: 100%;
                     font-family: 'Hiragino Kaku Gothic ProN';
                     font-style: normal;
                     font-weight: 300;
                     font-size: 12px;
                     line-height: 21px;
+                    padding: 16px;  
+                    &.checkbox {
+                        justify-items: center;
+                        padding: 0;
+                        width: 50px;
+                    }
                 }
             }
             table {
@@ -284,7 +297,10 @@ input[type="checkbox"] {
                             display: inline-block;
                         }
                         border-right: 1px solid rgba(0, 0, 0, 0.2);
-
+                        pre {
+                            margin: 0;
+                            padding: 0;
+                        }
                         // &#customerName {
                         //     padding: 22px 36px;
                         // }
@@ -294,6 +310,8 @@ input[type="checkbox"] {
                 tbody {
                     p {
                         white-space: pre-wrap;
+                        margin: 0;
+                        padding: 0;
                     }
                     &.default {
                         background-color: #ffffff;
