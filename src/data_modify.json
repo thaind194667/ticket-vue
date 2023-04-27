@@ -1,0 +1,71 @@
+{
+	"Result": null,
+	"IdRace": 280,
+	"NmRace": "2023 RACEE第2戦",
+	"YmdPublicStart": "2023/03/17",
+	"YmdPublicEnd": "2023/05/31",
+	"YmdOpenStart": "2023/03/17",
+	"YmdOpenEnd": "2023/04/30",
+	"TicketPurchaseList": [
+		{
+			"PurchaseID": "1001", 
+			"CustomerID": "10001", 
+			"CustomerName": "Name11111", 
+			"Category": "FISCOクラブ", 
+			"PurchasePeriod": "2021/08/20 11:15", 
+			"SaleMethod": 1, 
+			"PaymentMethod": 1, 
+			"PaymentStatus": 0
+		},
+		{
+			"PurchaseID": "1002", 
+			"CustomerID": "20002", 
+			"CustomerName": "Name22222", 
+			"Category": "FISCOクラブ", 
+			"PurchasePeriod": "2021/08/20 11:15", 
+			"SaleMethod": 2, 
+			"PaymentMethod": 2, 
+			"PaymentStatus": 1
+		},
+		{
+			"PurchaseID": "1003", 
+			"CustomerID": "30003", 
+			"CustomerName": "Name33333", 
+			"Category": "FISCOクラブ", 
+			"PurchasePeriod": "2021/08/20 11:15", 
+			"SaleMethod": 0, 
+			"PaymentMethod": 0, 
+			"PaymentStatus": 2
+		},
+		{
+			"PurchaseID": "1004", 
+			"CustomerID": "40004", 
+			"CustomerName": "Name44444", 
+			"Category": "FISCOクラブ", 
+			"PurchasePeriod": "2021/08/20 11:15", 
+			"SaleMethod": 1, 
+			"PaymentMethod": 1, 
+			"PaymentStatus": 1
+		},
+		{
+			"PurchaseID": "1005", 
+			"CustomerID": "50005", 
+			"CustomerName": "Name55555", 
+			"Category": "FISCOクラブ", 
+			"PurchasePeriod": "2022/08/20 11:15", 
+			"SaleMethod": 0, 
+			"PaymentMethod": 0, 
+			"PaymentStatus": 0
+		},
+		{
+			"PurchaseID": "1006", 
+			"CustomerID": "60006", 
+			"CustomerName": "Name66666", 
+			"Category": "FISCOクラブ", 
+			"PurchasePeriod": "2022/08/21 11:15", 
+			"SaleMethod": 2, 
+			"PaymentMethod": 2, 
+			"PaymentStatus": 2
+		}
+	]
+}
