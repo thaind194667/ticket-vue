@@ -26,11 +26,10 @@
                     <col />
                     <col />
                     <col />
-                        <!-- <TableHead :table-head="tableHead"/> -->
                         <thead>
                             <tr>
                                 <th v-for="obj of tableHead" :key="obj.key" :id="obj.key">
-                                    <CheckBox status="default" v-if="obj.key === 'checkbox'"/>
+                                    <CheckBox @change="changeAll" :status="checkedAll ? 'checked' : 'default'" v-if="obj.key === 'checkbox'"/>
                                     <pre>{{ obj.value }}</pre>
                                 </th>
                             </tr>
@@ -41,7 +40,6 @@
                                 <td class="checkbox">
                                     <CheckBox @change="changeStatus(index)"
                                     :status="row.Status"/>
-                                    <!-- <input type="checkbox" name="choose" /> -->
                                 </td>
                                 <td>
                                     <div>{{row.PurchaseID}}</div>
@@ -54,17 +52,13 @@
                                 <td>{{ row.PaymentMethod }}</td>
                                 <td class="payment-method"><p>{{ row.PaymentStatus }}</p></td>
                                 <td>
-                                    <!-- <div> -->
-                                        <!-- <button style="margin: 0;">編集</button> -->
-                                        <ButtonS pattern="black short" value="編集" />
-                                    <!-- </div> -->
+                                    <ButtonS pattern="black short" value="編集" />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- <div class="below-table"> -->
                 <BelowTable
                     :empty="tableDataRows.length === 0"
                     :rows-in-page="rowsInPage"
@@ -74,7 +68,6 @@
                     :start-index="startIndex + 1"
                     @changePage="changePage"
                 />
-                <!-- </div> -->
             </div>
         </div>
     </div>
@@ -84,11 +77,9 @@
 <script setup lang="ts">
 import PageHeader from '@/components/PageHeader/PageHeader.vue';
 import Title from '@/components/Content/Title/Title.vue';
-// import Search from '@/components/Content/ContentMain/Search/Search.vue';
 import SearchBox from '@/views/new/SearchBox.vue'
 import ButtonS from '@/components/ButtonS.vue';
 import CheckBox from '@/views/Checkbox.vue'
-// import TableHead from '@/components/Content/ContentMain/Table/TableNarrow/TableHead.vue'
 import BelowTable from '@/components/Content/ContentMain/Table/BelowTable/BelowTable.vue';
 import data from '@/data_modify.json';
 import {reactive, ref, onMounted, watch} from 'vue'
@@ -142,6 +133,7 @@ const maxRow = ref<number>(0);
 const maxPage = ref<number>(0);
 const startIndex = ref<number>(0);
 const endIndex = ref<number>(0);
+const checkedAll = ref<boolean>(false);
 
 const calBegin = () => {
 	maxRow.value = tableData.value.length;
@@ -150,21 +142,22 @@ const calBegin = () => {
 	endIndex.value = startIndex.value + rowsInPage.value;
 	tableDataRows.value = tableData.value.slice(startIndex.value, endIndex.value);
 	if (!tableDataRows.value.length && currentPage.value !== 1) changePage(currentPage.value - 1);
-	// console.log(rowsInPage.value);
-	// console.log(currentPage.value);
-	// console.log(maxPage.value);
-	// console.log(startIndex.value );
-	// console.log(tableBodyRows.value);
 };
 
 onMounted(() => {
     for (let i = 0; i < data.TicketPurchaseList.length; i++) {
-		tableData.value[i] = { ...data.TicketPurchaseList[i], Status: 'checked' };
+		tableData.value[i] = { ...data.TicketPurchaseList[i], Status: 'default' };
         tableData.value[i].PurchasePeriod = dateFormat(data.TicketPurchaseList[i].PurchasePeriod);
 	}
 	calBegin();
 });
 
+const resetCheck = () => {
+    for(var i = 0 ; i < tableDataRows.value.length; i++) {
+        tableDataRows.value[i].Status = 'default'
+    }
+}
+ 
 const setChange = (index: number, newVal: TableRowType) => {
 	tableData.value[index + startIndex.value] = newVal;
 };
@@ -176,12 +169,23 @@ const changeStatus = (index: number) => {
     else tableData.value[index + startIndex.value].Status = 'default'
 }
 
+const changeAll = () => {
+    checkedAll.value = !checkedAll.value
+    for(var i = 0 ; i < tableDataRows.value.length; i++) {
+        if(checkedAll.value)
+            tableDataRows.value[i].Status = 'checked'
+        else tableDataRows.value[i].Status = 'default'
+    }
+}
+ 
 const addNewRecord = () => {
 	tableData.value.push(newDefaultTicketPurchaseRow);
 };
 
 const changePage = (index: number) => {
 	currentPage.value = index;
+    checkedAll.value = false;
+    resetCheck()
 	calBegin();
 };
 
@@ -301,9 +305,6 @@ input[type="checkbox"] {
                             margin: 0;
                             padding: 0;
                         }
-                        // &#customerName {
-                        //     padding: 22px 36px;
-                        // }
                     }
                     
                 }

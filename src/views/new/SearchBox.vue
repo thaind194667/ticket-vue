@@ -21,58 +21,9 @@
 				<div>レース情報</div>
 			</div>
 
-			<div class="search-fold" @click="foldSearch1">
-				<svg id="search-fold-icon1" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" >
-					<path
-						d="M4.62176 1.74699C4.66991 1.69443 4.72848 1.65246 4.79372 1.62374C4.85897 1.59503 4.92948 1.5802 5.00076 1.5802C5.07205 1.5802 5.14255 1.59503 5.2078 1.62374C5.27305 1.65246 5.33161 1.69443 5.37976 1.74699L9.86476 6.63999C9.93207 6.71355 9.97654 6.80509 9.99274 6.90347C10.0089 7.00185 9.99618 7.10282 9.95601 7.19407C9.91584 7.28533 9.85 7.36293 9.7665 7.41742C9.68301 7.47192 9.58547 7.50095 9.48576 7.50099L0.515761 7.50099C0.416056 7.50095 0.318514 7.47192 0.23502 7.41742C0.151525 7.36293 0.0856826 7.28533 0.0455135 7.19407C0.00534434 7.10282 -0.00741692 7.00185 0.00878443 6.90347C0.0249858 6.80509 0.0694503 6.71354 0.136761 6.63999L4.62176 1.74699Z" fill="#DE2233"
-					/>
-				</svg>
-			</div>
-		</div>
-
-		<div class="search-container1" v-show="open1">
-			<div class="search-info">
-				<div class="search-id">
-					<div class="input-title">レースID</div>
-					<div class="input-text">
-						<input type="text" name="raceID" placeholder="12345678" v-model="result.IdRace" />
-					</div>
-				</div>
-
-				<div class="search-name">
-					<div class="input-title">レース名</div>
-					<div class="input-text">
-						<input type="text" name="raceName" placeholder="SUPER GT" v-model="result.NmRace" />
-					</div>
-				</div>
-			</div>
-
-			<div class="search-date">
-				<div class="input-title">開催期間</div>
-				<div class="date-input">
-					<input type="text" name="fromDate" :placeholder="defaultDate" v-model="result.YmdOpenStart" />
-					～
-					<input type="text" name="toDate" :placeholder="defaultDate" v-model="result.YmdOpenEnd" />
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="search below">
-		<div class="search-header">
-			<div class="search-header-title">
-				<div>
-					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M14.4461 15.8566L11.2352 12.642C9.8169 13.7099 8.04665 14.2002 6.28183 14.0139C4.51702 13.8276 2.88796 12.9785 1.72322 11.6379C0.558483 10.2972 -0.0560156 8.56456 0.00401833 6.78863C0.0640523 5.01269 0.795396 3.32542 2.048 2.0667C3.30061 0.807991 4.98301 0.0713017 6.75636 0.00491069C8.52972 -0.0614803 10.2618 0.547332 11.6048 1.70887C12.9477 2.87041 13.8007 4.49829 13.993 6.26478C14.1853 8.03127 13.7028 9.80515 12.6413 11.2291L15.8522 14.4438C15.899 14.4902 15.9357 14.5453 15.9611 14.6062C15.9865 14.667 16 14.7323 16 14.7982C16 14.8641 15.9865 14.9294 15.9611 14.9903C15.9357 15.0511 15.899 15.1063 15.8522 15.1526L15.1482 15.8566C15.0548 15.9488 14.9293 16.0002 14.7981 16C14.6668 15.9994 14.5403 15.9482 14.4461 15.8566ZM2.08495 7.05347C2.08595 8.00646 2.36045 8.93911 2.87454 9.7411C3.38864 10.5431 4.12173 11.1807 4.9866 11.5785C5.85146 11.9762 6.81151 12.1175 7.75405 11.9855C8.69658 11.8534 9.58109 11.4535 10.3037 10.8333L10.8307 10.3C11.3564 9.69088 11.7263 8.96331 11.9101 8.17954C12.0938 7.39578 12.0849 6.57909 11.8848 5.79935C11.6847 5.01962 11.2991 4.29997 10.7607 3.70202C10.2223 3.10407 9.54839 2.64547 8.79452 2.36563C8.04065 2.08578 7.2291 1.99288 6.43158 2.09494C5.63406 2.197 4.87387 2.4911 4.21451 2.95179C3.55515 3.41248 3.01788 4.02616 2.647 4.74046C2.27612 5.45477 2.0828 6.2484 2.08495 7.05347Z" fill="#202529"/>
-					</svg>
-
-				</div>
-				<div>検索条件</div>
-			</div>
-
-			<div class="search-fold" @click="foldSearch2">
+			<div class="search-fold" id="search-fold-icon1" @click="foldSearch1">
 				<svg
-					id="search-fold-icon2"
+					
 					width="10"
 					height="10"
 					viewBox="0 0 10 10"
@@ -87,60 +38,129 @@
 			</div>
 		</div>
 
-        <div class="search-container2" v-show="open2">
-			<div class="search-row">
-				<div class="purchaseID">
-					<div class="input-title">購入ID</div>
+		<div class="search-container1" v-show="open1">
+			<div class="search-info">
+				<div class="search-id">
+					<div class="input-title">レースID</div>
 					<div class="input-text">
-						<input class="text big" type="text" name="raceID" placeholder="購入ID" />
+						{{ result.IdRace ? result.IdRace : '' }}
 					</div>
 				</div>
 
-				<div class="customerType">
-					<div class="input-title">顧客種類</div>
+				<div class="search-name">
+					<div class="input-title">レース名</div>
 					<div class="input-text">
-						<input class="text big" type="text" name="raceID" placeholder="顧客種類" />
-					</div>
-				</div>
-
-				<div class="customerID">
-					<div class="input-title">顧客ID</div>
-					<div class="input-text">
-						<input class="text big" type="text" name="raceID" placeholder="顧客ID" />
-					</div>
-				</div>
-
-				<div class="customerName">
-					<div class="input-title">顧客名</div>
-					<div class="input-text">
-						<input class="text big" type="text" name="raceID" placeholder="顧客名" />
+						{{ result.NmRace ? result.NmRace : '' }}
 					</div>
 				</div>
 			</div>
+
+			<div class="search-date">
+				<div class="input-title">開催期間</div>
+				<div class="date-input">
+					{{ result.YmdOpenStart }} ~ {{ result.YmdOpenEnd }}
+					<!-- {{ renderDate(result.YmdOpenStart, result.YmdOpenEnd) }} -->
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="search below">
+		<div class="search-header">
+			<div class="search-header-title">
+				<div>
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M14.4461 15.8566L11.2352 12.642C9.8169 13.7099 8.04665 14.2002 6.28183 14.0139C4.51702 13.8276 2.88796 12.9785 1.72322 11.6379C0.558483 10.2972 -0.0560156 8.56456 0.00401833 6.78863C0.0640523 5.01269 0.795396 3.32542 2.048 2.0667C3.30061 0.807991 4.98301 0.0713017 6.75636 0.00491069C8.52972 -0.0614803 10.2618 0.547332 11.6048 1.70887C12.9477 2.87041 13.8007 4.49829 13.993 6.26478C14.1853 8.03127 13.7028 9.80515 12.6413 11.2291L15.8522 14.4438C15.899 14.4902 15.9357 14.5453 15.9611 14.6062C15.9865 14.667 16 14.7323 16 14.7982C16 14.8641 15.9865 14.9294 15.9611 14.9903C15.9357 15.0511 15.899 15.1063 15.8522 15.1526L15.1482 15.8566C15.0548 15.9488 14.9293 16.0002 14.7981 16C14.6668 15.9994 14.5403 15.9482 14.4461 15.8566ZM2.08495 7.05347C2.08595 8.00646 2.36045 8.93911 2.87454 9.7411C3.38864 10.5431 4.12173 11.1807 4.9866 11.5785C5.85146 11.9762 6.81151 12.1175 7.75405 11.9855C8.69658 11.8534 9.58109 11.4535 10.3037 10.8333L10.8307 10.3C11.3564 9.69088 11.7263 8.96331 11.9101 8.17954C12.0938 7.39578 12.0849 6.57909 11.8848 5.79935C11.6847 5.01962 11.2991 4.29997 10.7607 3.70202C10.2223 3.10407 9.54839 2.64547 8.79452 2.36563C8.04065 2.08578 7.2291 1.99288 6.43158 2.09494C5.63406 2.197 4.87387 2.4911 4.21451 2.95179C3.55515 3.41248 3.01788 4.02616 2.647 4.74046C2.27612 5.45477 2.0828 6.2484 2.08495 7.05347Z"
+							fill="#202529"
+						/>
+					</svg>
+				</div>
+				<div>検索条件</div>
+			</div>
+
+			<div class="search-fold" id="search-fold-icon2" @click="foldSearch2">
+				<svg
+					
+					width="10"
+					height="10"
+					viewBox="0 0 10 10"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="M4.62176 1.74699C4.66991 1.69443 4.72848 1.65246 4.79372 1.62374C4.85897 1.59503 4.92948 1.5802 5.00076 1.5802C5.07205 1.5802 5.14255 1.59503 5.2078 1.62374C5.27305 1.65246 5.33161 1.69443 5.37976 1.74699L9.86476 6.63999C9.93207 6.71355 9.97654 6.80509 9.99274 6.90347C10.0089 7.00185 9.99618 7.10282 9.95601 7.19407C9.91584 7.28533 9.85 7.36293 9.7665 7.41742C9.68301 7.47192 9.58547 7.50095 9.48576 7.50099L0.515761 7.50099C0.416056 7.50095 0.318514 7.47192 0.23502 7.41742C0.151525 7.36293 0.0856826 7.28533 0.0455135 7.19407C0.00534434 7.10282 -0.00741692 7.00185 0.00878443 6.90347C0.0249858 6.80509 0.0694503 6.71354 0.136761 6.63999L4.62176 1.74699Z"
+						fill="#DE2233"
+					/>
+				</svg>
+			</div>
+		</div>
+
+		<div class="search-container2" v-show="open2">
 			<div class="search-row">
-				<div class="category">
-					<div class="input-title">カテゴリ</div>
+				<div class="search-cell purchaseID">
+					<div class="input-title">購入ID</div>
 					<div class="input-text">
-						<input class="text big" type="text" name="raceID" placeholder="カテゴリ" />
+						<InputBox status="edit" type="text" placeholder="購入ID" />
 					</div>
 				</div>
-				<div class="purchaseDate">
+
+				<div class="search-cell customerType">
+					<div class="input-title">顧客種類</div>
+					<div class="input-text">
+						<InputBox status="edit" type="radio" name="customerType" :radioList="RadioList" />
+						<!-- <InputBox status="edit" type="radio" name="customerType" value="法人"/> -->
+					</div>
+				</div>
+
+				<div class="search-cell customerID">
+					<div class="input-title">顧客ID</div>
+					<div class="input-text">
+						<InputBox status="edit" type="text" placeholder="顧客ID" />
+					</div>
+				</div>
+
+				<div class="search-cell customerName">
+					<div class="input-title">顧客名</div>
+					<div class="input-text">
+						<InputBox status="edit" type="text" placeholder="顧客名" />
+					</div>
+				</div>
+			</div>
+
+			<div class="search-row">
+				<div class="search-cell category">
+					<div class="input-title">カテゴリ</div>
+					<div class="input-text">
+						<InputBox status="edit" type="text" placeholder="カテゴリ" />
+					</div>
+				</div>
+				<div class="search-cell purchaseDate">
 					<div>
 						<div class="input-title">購入日時</div>
 					</div>
-					<div style="display:flex; flex-direction: row;">
+					<div
+						style="
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							gap: 3px;
+							align-self: stretch;
+						"
+					>
 						<div class="input-text">
-							<input class="text big" type="text" name="raceID" placeholder="購入日時" />
+							<InputBox status="edit" type="text" placeholder="開始" icon="date-choose"/>
 						</div>
 						~
 						<div class="input-text">
-							<input class="text big" type="text" name="raceID" placeholder="購入日時" />
+							<InputBox status="edit" type="text" placeholder="終了" icon="date-choose"/>
 						</div>
-						
 					</div>
 				</div>
-				<div class="btn">
-					<ButtonS pattern="black settingbtn" value="検索" />
+				<div class="search-cell btn">
+					<button type="button" class="search-btn">検索</button>
+					<!-- <ButtonS pattern="black settingbtn" value="検索" /> -->
 				</div>
 			</div>
 		</div>
@@ -150,7 +170,7 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue';
 import { dateFormatDayOFWeek } from '@/utility';
-import ButtonS from '@/components/ButtonS.vue';
+import InputBox from './InputBox.vue';
 type ResultPattern = {
 	IdRace: number;
 	NmRace: string;
@@ -161,6 +181,8 @@ type ResultPattern = {
 const props = defineProps({
 	searchRes: { type: Object as PropType<ResultPattern>, required: true },
 });
+
+const RadioList = ['個人', '法人'];
 
 const defaultDate = dateFormatDayOFWeek('04/13/2023');
 const open1 = ref<boolean>(true);
@@ -183,25 +205,9 @@ const foldSearch2 = () => {
 
 <style scoped lang="scss">
 @use '@/assets/base';
-
-input[type='text'] {
-	border: none;
-	font-family: 'Gothic';
-	font-style: normal;
-	font-weight: 300;
-	font-size: 15px;
-	line-height: 22px;
-	color: #000000;
-	&::placeholder {
-		color: black;
-		opacity: 1; /* Firefox */
-	}
-}
 .input-title {
 	@include base.rowFlex($justifyContent: none);
 	gap: 6px;
-	// width: 258px;
-	// height: 20px;
 	border-radius: 4px;
 	@include base.autoLayout($order: 0, $grow: 0, $align: stretch);
 	font-family: 'Hiragino Kaku Gothic ProN';
@@ -216,27 +222,25 @@ input[type='text'] {
 	@include base.columnFlex($padding: 10px 16px);
 	gap: 8px;
 	isolation: isolate;
-	// width: 1112px;
-	// height: 104px;
 	background: #ffffff;
+	box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+	border-radius: 8px;
+	align-self: stretch;
 	&.above {
-		border-bottom: solid 1px;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 		border-radius: 8px 8px 0px 0px;
+		order: 0;
 	}
 	&.below {
 		border-radius: 0px 0px 8px 8px;
+		order: 1;
 	}
-	@include base.autoLayout($order: 0, $grow: 0, $align: stretch);
 	.search-header {
 		@include base.rowFlex($justifyContent: space-between);
 		gap: 8px;
-		// width: 1080px;
-		// height: 24px;
 		@include base.autoLayout($order: 0, $grow: 0, $align: stretch);
 		z-index: 0;
 		.search-header-title {
-			// width: 79px;
-			// height: 24px;
 			@include base.rowFlex;
 			gap: 8px;
 
@@ -246,11 +250,9 @@ input[type='text'] {
 			font-size: 16px;
 			line-height: 24px;
 			color: #202529;
-
 			@include base.autoLayout($order: 0, $grow: 0);
 		}
-
-		#search-fold-icon1, #search-fold-icon2 {
+		.search-fold {
 			transition: transform 0.4s ease-in-out;
 			&:hover {
 				cursor: pointer;
@@ -261,60 +263,97 @@ input[type='text'] {
 	.search-container1 {
 		@include base.rowFlex;
 		gap: 16px;
-		// width: 1080px;
-		// height: 52px;
 		@include base.autoLayout($order: 1, $grow: 0, $align: stretch);
 		z-index: 1;
-
 		.search-info {
 			@include base.rowFlex;
-			gap: 16px;
-			// width: 532px;
-			// height: 52px;
-			@include base.autoLayout($order: 0, $grow: 1);
-			.search-id,
+			flex: 1;
+			align-self: flex-start;
+			gap: 5px;
+			.input-text {
+				@include base.columnFlex;
+				gap: 4px;
+				border-radius: 4px;
+				overflow: visible;
+				color: #000000;
+				word-break: break-all;
+				font-family: 'Hiragino Kaku Gothic ProN';
+				font-style: normal;
+				font-weight: 300;
+				font-size: 15px;
+				line-height: 22px;
+				@include base.autoLayout($order: 1, $grow: 0, $align: stretch);
+			}
+			.search-id {
+				@include base.columnFlex;
+				align-self: flex-start;
+				flex: 1;
+			}
 			.search-name {
 				@include base.columnFlex;
-				// width: 258px;
-				// height: 52px;
-				@include base.autoLayout($order: 0, $grow: 1);
-				.input-text {
-					@include base.columnFlex;
-					gap: 4px;
-					// width: 258px;
-					// height: 32px;
-					border-radius: 4px;
-					@include base.autoLayout($order: 1, $grow: 0, $align: stretch);
-				}
+				align-self: flex-start;
+				flex: 1;
 			}
 		}
-
 		.search-date {
 			@include base.columnFlex;
-			// width: 532px;
-			// height: 52px;
-			@include base.autoLayout($order: 1, $grow: 1);
+			align-self: flex-start;
+			flex: 1;
+			gap: 5px;
 			.date-input {
 				@include base.rowFlex($justifyContent: none);
 				gap: 12px;
-				// width: 532px;
-				// height: 32px;
 				@include base.autoLayout($order: 1, $grow: 0, $align: stretch);
 			}
 		}
-
-		
 	}
 
 	.search-container2 {
 		@include base.columnFlex;
 		gap: 16px;
+		padding: 0px;
+		@include base.autoLayout($order: 1, $grow: 0, $align: stretch);
 		.search-row {
 			@include base.rowFlex;
+			align-items: flex-end;
 			gap: 16px;
-
+			@include base.autoLayout($order: 0, $grow: 0, $align: stretch);
 			.purchaseDate {
-				@include base.columnFlex;
+				flex:2 !important;
+				padding: 0px;
+
+				.input-text {
+					flex: 1;
+				}
+			}
+			.search-cell {
+				flex: 1;
+				padding: 0px;
+				gap: 8px;
+			}
+			.btn {
+				height: 54px;
+				.search-btn {
+					border: none;
+					background: #202529;
+					color: white;
+					width: 120px;
+					height: 54px;;
+					border-radius: 4px;
+					padding: 10px 16px;
+					&:hover {
+						cursor: pointer;
+						background: white;
+						color: #202529;
+						border: solid 1px #202529;
+						font-family: "Hiragino Kaku Gothic ProN";
+						font-style: normal;
+						font-weight: 600;
+						font-size: 12px;
+						line-height: 16px;
+						text-align: center;
+					}
+				}
 			}
 		}
 	}

@@ -19,17 +19,12 @@ const props = defineProps({
 .container {
 	display: flex;
     align-items: center;
-	// position: relative;
-    // width: 56px;
-	// padding-left: 35px;
-	// margin-bottom: 12px;
 	cursor: pointer;
 	font-size: 22px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-
     input {
         position: absolute;
         opacity: 0;
@@ -52,7 +47,9 @@ const props = defineProps({
         left: 37.5px;
         height: 25px;
         width: 25px;
-        background-color: #eee;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
+        background-color: white;
         &:after {
             content: '';
             position: absolute;
@@ -69,7 +66,7 @@ const props = defineProps({
         }
     }
     &:hover input ~ .checkmark {
-        background-color: #ccc;
+        background-color: #DE2233;
     }
 }
 </style>

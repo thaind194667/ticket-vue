@@ -2,7 +2,7 @@
 	<div class="wrapper">
 		<div
 			ref="textbox"
-			:class="`textbox ${editing ? 'edit' : 'default'}`"
+			:class="`textbox ${status} ${editing ? 'edit' : 'default'}`"
 			:contenteditable="status !== 'default'"
 			@input="send"
 			@focus="makeEdit"
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 const props = defineProps({
-	modelValue: { type: String, required: true },
+	modelValue: { type: String, required: false },
 	status: { type: String, required: true },
 	type: { type: String, required: true },
 	unit: { type: String, default: '' },
@@ -57,15 +57,17 @@ const send = () => {
 	white-space: nowrap;
 	.textbox {
 		display: block;
-		padding: 7px 8px;
+		padding: 16px;
 		border-radius: 4px;
 		background: none;
-		border: solid 1px;
+		border: none;
 		font-family: 'Hiragino Kaku Gothic ProN';
 		font-style: normal;
 		font-weight: 300;
-		font-size: 12px;
-		line-height: 18px;
+		font-size: 15px;
+		line-height: 22px;
+		color: #87898B;
+		width: 258px;
 		// z-index: 1;
 		&.default {
 			width: 50%;
@@ -73,15 +75,13 @@ const send = () => {
 			text-overflow: ellipsis;
 		}
 		&.edit {
-			z-index: 1;
-
-			background-color: rgb(255, 255, 255);
+			// z-index: 1;
+			background-color: #F2F2F2;
 			min-width: 50%;
 			max-width: 500px;
 			overflow: visible;
 			// border: 1px solid;
 			outline: none;
-
 			&:hover {
 				cursor: text;
 			}
